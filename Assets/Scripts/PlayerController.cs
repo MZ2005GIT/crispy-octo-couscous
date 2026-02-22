@@ -26,20 +26,14 @@ public class PlayerController : MonoBehaviour
             {
                 attackHitbox.enabled = false;
             }
-            else
-            {
-                Debug.LogWarning("Attack hitbox PolygonCollider2D not found!");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Attack transform not found!");
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !animator.GetBool("attack") && Time.time >= lastAttackTime + attackCooldown)
+        if (animator.GetBool("isDead")) { return; }
+
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= lastAttackTime + attackCooldown)
         {
             rb.velocity = Vector2.zero;
             animator.SetFloat("horizontal", 0);
@@ -47,11 +41,11 @@ public class PlayerController : MonoBehaviour
             lastAttackTime = Time.time;
             StartCoroutine(StartAnimationAttack());
         }
+
     }
 
     private void FixedUpdate()
     {
-        if (!animator.GetBool("attack"))
         {
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
@@ -79,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator StartAnimationAttack()
     {
-        animator.SetBool("attack", true);
+        animator.SetTrigger("attack");
         yield return new WaitForSeconds(0.5f);
         if (attackHitbox != null)
         {
@@ -88,7 +82,6 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(0.517f);
 
-        animator.SetBool("attack", false);
         if (attackHitbox != null)
         {
             attackHitbox.enabled = false;
