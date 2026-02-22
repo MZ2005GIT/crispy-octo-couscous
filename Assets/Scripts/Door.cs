@@ -46,7 +46,6 @@ public class Door : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Destroy(player);
-        SceneManager.UnloadSceneAsync("UI");
         SceneManager.LoadScene("LevelSelection");
     }
 }

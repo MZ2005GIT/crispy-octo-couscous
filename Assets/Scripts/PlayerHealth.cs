@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f;
-    public float damageCooldown = 0.5f;  // FIXED
+    public float damageCooldown = 0.5f;  
     private float currentHealth;
-    private float lastDamageTime = -1f;  // FIXED
+    private float lastDamageTime = -1f;
     private Animator animator;
 
     private void Start()
