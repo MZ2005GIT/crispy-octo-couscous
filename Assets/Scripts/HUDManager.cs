@@ -23,8 +23,18 @@ public class HUDManager : MonoBehaviour
     {
         // Initialize health bar
         displayedHealth = playerHealth.GetCurrentHealth();
-        healthBar.maxValue = playerHealth.GetMaxHealth();
-        healthBar.value = displayedHealth;
+        //healthBar.maxValue = playerHealth.GetMaxHealth();
+        //healthBar.value = displayedHealth;
+    }
+
+    public void SetMaxHealth(float max)
+    {
+        healthBar.value = max;
+        healthBar.maxValue = max;
+    }
+    public void SetHealth(float current)
+    {
+        healthBar.value = current;
     }
 
     void Update()

@@ -11,10 +11,15 @@ public class PlayerHealth : MonoBehaviour
     private float lastDamageTime = -1f;
     private Animator animator;
 
+    public HUDManager healthbar;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+        healthbar.SetMaxHealth(maxHealth);
+        //Debug.Log(currentHealth);
+        //Debug.Log(maxHealth);
     }
 
     public void TakeDamage(int damage)
@@ -23,6 +28,8 @@ public class PlayerHealth : MonoBehaviour
         {
             return;
         }
+        //currentHealth -= damage;
+        healthbar.SetHealth(currentHealth);
         currentHealth = Mathf.Max(0, currentHealth - damage);
         lastDamageTime = Time.time;
         animator.SetTrigger("hit");
@@ -30,6 +37,8 @@ public class PlayerHealth : MonoBehaviour
         {
             StartCoroutine(Die());
         }
+        //Debug.Log(currentHealth);
+        //Debug.Log(maxHealth);
     }
 
     private IEnumerator Die()
