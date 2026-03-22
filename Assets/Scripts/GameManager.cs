@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int maxPossibleCoins;
     public int totalMaxPossibleCoins = 0;
     private bool chestOpenedThisLevel = false;
+    public bool levelUnlock = false;
 
     void Awake()
     {
@@ -28,13 +29,11 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"\n LEVEL {scene.buildIndex + 1} STARTED");
 
         // RESET PER-LEVEL FLAGS
         chestOpenedThisLevel = false;
        
             PlayerInventoryManager.Instance.currentKeys = 0;
-            Debug.Log("Keys reset to 0");
 
         // RANDOMIZE COINS FOR ALL CHESTS IN THIS LEVEL
         AssignRandomCoinsToChests(scene);
@@ -42,7 +41,6 @@ public class GameManager : MonoBehaviour
         // TRACK MAX POSSIBLE
         UpdateMaxPossibleCoins(scene);
 
-        Debug.Log($" Level {scene.buildIndex + 1} Max: {GetLevelMaxCoins(scene.buildIndex)} | Total Max: {totalMaxPossibleCoins}");
     }
 
     // Assign 50-150 random coins to each chest
@@ -52,7 +50,6 @@ public class GameManager : MonoBehaviour
         foreach (var chest in chests)
         {
             chest.rewardCoins = Random.Range(50, 151); // 50-150 coins
-            Debug.Log($" Chest {chest.name}: {chest.rewardCoins} coins");
         }
     }
 
@@ -90,6 +87,5 @@ public class GameManager : MonoBehaviour
     public void AddToActualCoins(int amount)
     {
         totalActualCoins += amount;
-        Debug.Log($"TOTAL: {totalActualCoins}/{totalMaxPossibleCoins} ({GetProgressPercentage()}%)");
     }
 }

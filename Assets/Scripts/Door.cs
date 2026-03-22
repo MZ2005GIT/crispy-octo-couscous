@@ -6,6 +6,7 @@ public class Door : MonoBehaviour
 {
     private bool isOpened = false;
     private GameObject player;
+    private GameManager gameManager;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -23,14 +24,12 @@ public class Door : MonoBehaviour
                     playerInventory.UseKeys(keysToConsume);
 
                     isOpened = true;
-                    Debug.Log("Door opened! All keys consumed.");
 
                     // Mark the level as cleared (e.g., for Level 1)
                     string currentLevel = SceneManager.GetActiveScene().name;
                     if (currentLevel == "lvl1") // Adjust the scene name as needed
                     {
-                        PlayerPrefs.SetInt("Level1Cleared", 1);
-                        PlayerPrefs.Save(); // Ensure the data is saved
+                        gameManager.levelUnlock = true;
                     }
                 }
                 StartCoroutine(Switching());
